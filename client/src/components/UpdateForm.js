@@ -5,14 +5,14 @@ const initialItem = {
     title: "",
     director: "",
     metascore:"",
-    stars:""
+    stars:[]
 };
 
 const UpdateForm = props => {
     const [movie, setMovie] = useState(initialItem);
 
     useEffect(() => {
-        const movieToUpdate = props.movies.find(movie => {
+        const movieToUpdate = props.movie.find(movie => {
             return `${movie.id}` === props.match.params.id;
         });
 
@@ -23,16 +23,16 @@ const UpdateForm = props => {
         }
     }, [props.movies, props.match.params.id]);
 
-    const changeHandler = e => {
-        e.persist();
-        let value = e.target.value;
-        if (e.target.name === "price") {
-            value = parseInt(value, 10);
-        }
+    const changeHandler = ev => {
+        // e.persist();
+        // let value = e.target.value;
+        // if (e.target.name === "price") {
+        //     value = parseInt(value, 10);
+        // }
 
         setMovie({
             ...movie,
-            [e.target.name]: value
+            [ev.target.name]: ev.target.value
         });
     };
 
@@ -44,6 +44,8 @@ const UpdateForm = props => {
             .then(res => {
                 console.log(res);
                 props.updateMovies(res.data);
+                //props.history.push("/");
+
             })
             .catch(err => {
                 console.log(err);
@@ -51,7 +53,7 @@ const UpdateForm = props => {
     }; // handleSubmit
 
     return(
-        <div>
+        <div className="formContainer">
             <form onSubmit={handleSubmit}>
                 <input 
                 type ="text"

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter } from "react-router-dom";
 
 const MovieCard = props => {
   const { title, director, metascore, stars , id} = props.movie;
@@ -38,9 +39,10 @@ const MovieCard = props => {
         </div>
       ))}
 
+      <button onClick={()=> props.history.push(`/update-movie/${id}`) } >Edit</button>
       <button onClick={deleteMovie}>Delete</button>
     </div>
   );
 };
 
-export default MovieCard;
+export default withRouter(MovieCard);
